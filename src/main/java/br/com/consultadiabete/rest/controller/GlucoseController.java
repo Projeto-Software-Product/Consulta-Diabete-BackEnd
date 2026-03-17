@@ -2,8 +2,10 @@ package br.com.consultadiabete.rest.controller;
 
 import br.com.consultadiabete.dto.glucoseData.CreateGlucoseDto;
 import br.com.consultadiabete.dto.glucoseData.GlucoseDataResponseDTO;
+import br.com.consultadiabete.dto.glucoseData.UpdateGlucoseDto;
 import br.com.consultadiabete.usecases.glucoseData.CreateGlucoseDataUseCase;
 import br.com.consultadiabete.usecases.glucoseData.FindGlucoseByIdUseCase;
+import br.com.consultadiabete.usecases.glucoseData.UpdateGlucoseUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +23,7 @@ public class GlucoseController {
 
     private final CreateGlucoseDataUseCase createGlucoseDataUseCase;
     private final FindGlucoseByIdUseCase findGlucoseByIdUseCase;
+    private final UpdateGlucoseUseCase updateGlucoseUseCase;
 
     @PostMapping("/create")
     public void createGlucoseData(@RequestBody CreateGlucoseDto  request) {
@@ -37,4 +40,8 @@ public class GlucoseController {
         return findGlucoseByIdUseCase.execute(userId, pageable);
     }
 
+    @PutMapping("/edit/{id}")
+    public void editGlucoseData(@PathVariable("id") UUID id, @RequestBody UpdateGlucoseDto request){
+        updateGlucoseUseCase.execute(id, request);
+    }
 }
