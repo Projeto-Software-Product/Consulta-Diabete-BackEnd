@@ -4,6 +4,7 @@ import br.com.consultadiabete.dto.glucoseData.CreateGlucoseDto;
 import br.com.consultadiabete.dto.glucoseData.GlucoseDataResponseDTO;
 import br.com.consultadiabete.dto.glucoseData.UpdateGlucoseDto;
 import br.com.consultadiabete.usecases.glucoseData.CreateGlucoseDataUseCase;
+import br.com.consultadiabete.usecases.glucoseData.DeleteGlucoseUseCase;
 import br.com.consultadiabete.usecases.glucoseData.FindGlucoseByIdUseCase;
 import br.com.consultadiabete.usecases.glucoseData.UpdateGlucoseUseCase;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class GlucoseController {
     private final CreateGlucoseDataUseCase createGlucoseDataUseCase;
     private final FindGlucoseByIdUseCase findGlucoseByIdUseCase;
     private final UpdateGlucoseUseCase updateGlucoseUseCase;
+    private final DeleteGlucoseUseCase deleteGlucoseUseCase;
 
     @PostMapping("/create")
     public void createGlucoseData(@RequestBody CreateGlucoseDto  request) {
@@ -44,4 +46,10 @@ public class GlucoseController {
     public void editGlucoseData(@PathVariable("id") UUID id, @RequestBody UpdateGlucoseDto request){
         updateGlucoseUseCase.execute(id, request);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteGlucoseData(@PathVariable("id") UUID userId) {
+        deleteGlucoseUseCase.execute(userId);
+    }
+
 }
